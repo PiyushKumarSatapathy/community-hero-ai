@@ -1,72 +1,63 @@
+import "./Dashboard.css";
+
 function Dashboard() {
   return (
-    <div
-      style={{
-        padding: "40px",
-      }}
-    >
-      <h1>Community Dashboard</h1>
+    <div className="dashboard-container">
 
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          marginTop: "30px",
-          flexWrap: "wrap",
-        }}
-      >
-        <div
-          style={{
-            background: "white",
-            padding: "20px",
-            width: "220px",
-            borderRadius: "10px",
-            boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h2>120</h2>
-          <p>Total Issues</p>
+      <h1 className="dashboard-title">
+        Dashboard Overview
+      </h1>
+
+      <div className="dashboard-cards">
+
+        <div className="dashboard-card">
+          <h2>15</h2>
+          <p>Total Reports</p>
         </div>
 
-        <div
-          style={{
-            background: "white",
-            padding: "20px",
-            width: "220px",
-            borderRadius: "10px",
-            boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h2>35</h2>
-          <p>Open Issues</p>
+        <div className="dashboard-card">
+          <h2>8</h2>
+          <p>Resolved</p>
         </div>
 
-        <div
-          style={{
-            background: "white",
-            padding: "20px",
-            width: "220px",
-            borderRadius: "10px",
-            boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h2>85</h2>
-          <p>Resolved Issues</p>
+        <div className="dashboard-card">
+          <h2>7</h2>
+          <p>Pending</p>
         </div>
 
-        <div
-          style={{
-            background: "white",
-            padding: "20px",
-            width: "220px",
-            borderRadius: "10px",
-            boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h2>12</h2>
-          <p>Critical Issues</p>
-        </div>
       </div>
+      <h2 style={{ marginBottom: "20px" }}>
+  Recent Issues
+</h2>
+
+<table className="issues-table">
+
+  <thead>
+    <tr>
+      <th>Issue</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>Road Damage</td>
+      <td>Pending</td>
+    </tr>
+
+    <tr>
+      <td>Water Leakage</td>
+      <td>Resolved</td>
+    </tr>
+
+    <tr>
+      <td>Street Light</td>
+      <td>Pending</td>
+    </tr>
+  </tbody>
+
+</table>
+
     </div>
   );
 }

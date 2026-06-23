@@ -1,0 +1,102 @@
+.dashboard-container {
+  padding: 40px;
+}
+
+.dashboard-title {
+  text-align: center;
+  margin-bottom: 40px;
+
+  color: #1e293b;
+}
+
+.dashboard-cards {
+  display: flex;
+  justify-content: center;
+
+  gap: 25px;
+
+  flex-wrap: wrap;
+
+  margin-bottom: 50px;
+}
+
+.dashboard-card {
+  background: white;
+
+  width: 250px;
+
+  padding: 25px;
+
+  border-radius: 20px;
+
+  text-align: center;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.08);
+
+  transition: 0.3s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-8px);
+}
+
+.dashboard-card h2 {
+  color: #2563eb;
+  font-size: 3rem;
+}
+
+.dashboard-card p {
+  color: #64748b;
+}
+.issues-table {
+  width: 100%;
+
+  background: white;
+
+  border-radius: 15px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.08);
+}
+
+.issues-table th {
+  background: #2563eb;
+  color: white;
+}
+
+.issues-table th,
+.issues-table td {
+  padding: 15px;
+  text-align: left;
+}
+
+.issues-table tr:nth-child(even) {
+  background: #f8fafc;
+}
+.dashboard-title {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.dashboard-card {
+  cursor: pointer;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-8px) scale(1.03);
+
+  box-shadow:
+    0 20px 40px rgba(37,99,235,0.2);
+}
+
+.issues-table {
+  transition: 0.3s;
+}
+
+.issues-table:hover {
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.12);
+}

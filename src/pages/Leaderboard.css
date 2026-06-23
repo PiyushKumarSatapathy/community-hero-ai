@@ -1,0 +1,60 @@
+.leaderboard-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px;
+}
+
+.leaderboard-container h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #1e293b;
+}
+
+.leaderboard-card {
+  background: white;
+
+  padding: 25px;
+
+  margin-bottom: 20px;
+
+  border-radius: 20px;
+
+  text-align: center;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.08);
+
+  transition: 0.3s;
+}
+
+.leaderboard-card:hover {
+  transform: translateY(-5px);
+}
+
+.leaderboard-card span {
+  font-size: 3rem;
+}
+
+.gold {
+  border-left: 8px solid gold;
+}
+
+.silver {
+  border-left: 8px solid silver;
+}
+
+.bronze {
+  border-left: 8px solid #cd7f32;
+}
+.leaderboard-card {
+  padding: 20px;
+  max-width: 700px;
+  margin: 20px auto;
+}
+.leaderboard-card h3 {
+  margin: 10px 0 5px;
+}
+
+.leaderboard-card p {
+  color: #64748b;
+}

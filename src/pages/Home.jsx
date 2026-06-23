@@ -1,89 +1,84 @@
+import "./Home.css";
+import { Link } from "react-router-dom";
 function Home() {
   return (
     <div>
-      <section
-        style={{
-          textAlign: "center",
-          padding: "80px 20px",
-          background:
-            "linear-gradient(135deg,#2563eb,#1e40af)",
-          color: "white",
-        }}
-      >
-        <h1 style={{ fontSize: "3rem" }}>
+
+      <section className="hero">
+        <h1>
           Community Hero AI
         </h1>
 
-        <p
-          style={{
-            fontSize: "1.2rem",
-            marginTop: "20px",
-          }}
-        >
-          AI Powered Hyperlocal Problem Solver
+        <p>
+          Report. Track. Improve.
+          AI-powered civic issue reporting
+          for smarter communities.
         </p>
 
-        <button
-          style={{
-            marginTop: "30px",
-            padding: "12px 24px",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "16px",
-          }}
-        >
-          Report Issue
-        </button>
+        <div className="hero-buttons">
+          <Link to="/report">
+            <button className="primary-btn">
+              Report Issue
+            </button>
+          </Link>
+
+          <Link to="/dashboard">
+            <button className="secondary-btn">
+              View Dashboard
+            </button>
+          </Link>
+        </div>
       </section>
-      <section
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    gap: "20px",
-    padding: "40px",
-    flexWrap: "wrap",
-  }}
->
-  <div
-    style={{
-      background: "white",
-      padding: "20px",
-      width: "220px",
-      borderRadius: "10px",
-      boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-    }}
-  >
-    <h2>120</h2>
-    <p>Issues Reported</p>
+
+      <section className="stats">
+
+        <div className="stat-card">
+          <h2>120</h2>
+          <p>Issues Reported</p>
+        </div>
+
+        <div className="stat-card">
+          <h2>85</h2>
+          <p>Issues Resolved</p>
+        </div>
+
+        <div className="stat-card">
+          <h2>500+</h2>
+          <p>Citizens Engaged</p>
+        </div>
+
+      </section>
+      <section className="features">
+
+  <h2>Why Use Community Hero AI?</h2>
+
+  <div className="feature-grid">
+
+    <div className="feature-card">
+      <h3>📍 Easy Reporting</h3>
+      <p>
+        Report community issues in seconds.
+      </p>
+    </div>
+
+    <div className="feature-card">
+      <h3>📊 Live Dashboard</h3>
+      <p>
+        Track issues and monitor progress.
+      </p>
+    </div>
+
+    <div className="feature-card">
+      <h3>🤖 AI Powered</h3>
+      <p>
+        Smart categorization and analytics.
+      </p>
+    </div>
+
   </div>
 
-  <div
-    style={{
-      background: "white",
-      padding: "20px",
-      width: "220px",
-      borderRadius: "10px",
-      boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-    }}
-  >
-    <h2>85</h2>
-    <p>Issues Resolved</p>
-  </div>
-
-  <div
-    style={{
-      background: "white",
-      padding: "20px",
-      width: "220px",
-      borderRadius: "10px",
-      boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-    }}
-  >
-    <h2>500+</h2>
-    <p>Citizens Engaged</p>
-  </div>
 </section>
+
     </div>
   );
 }

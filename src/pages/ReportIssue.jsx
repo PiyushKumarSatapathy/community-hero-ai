@@ -1,30 +1,50 @@
-function ReportIssue() {
-  return (
-    <div
-      style={{
-        maxWidth: "700px",
-        margin: "50px auto",
-        background: "white",
-        padding: "30px",
-        borderRadius: "10px",
-        boxShadow: "0 0 10px rgba(0,0,0,0.1)"
-      }}
-    >
-      <h1>Report Community Issue</h1>
+import { useState } from "react";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../services/firebase";
+import "./ReportIssue.css";
 
-      <br />
+function ReportIssue() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+
+  const handleSubmit = async () => {
+    try {
+      await addDoc(collection(db, "issues"), {
+        title,
+        description,
+        location,
+        createdAt: new Date(),
+      });
+
+      alert("Issue Submitted Successfully!");
+
+      setTitle("");
+      setDescription("");
+      setLocation("");
+    } catch (error) {
+      console.error(error);
+      alert("Error submitting issue");
+    }
+  };
+
+  return (
+    <div className="report-container">
+      <h1 className="report-title">
+        Report Community Issue
+      </h1>
+      <p className="report-subtitle">
+  Help improve your community by reporting issues.
+      </p>
 
       <label>Issue Title</label>
 
       <input
         type="text"
         placeholder="Enter issue title"
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginTop: "5px",
-          marginBottom: "20px"
-        }}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        className="form-control"
       />
 
       <label>Description</label>
@@ -32,48 +52,31 @@ function ReportIssue() {
       <textarea
         rows="5"
         placeholder="Describe the issue"
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginTop: "5px",
-          marginBottom: "20px"
-        }}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        className="form-control"
       />
 
       <label>Upload Image</label>
 
       <input
         type="file"
-        style={{
-          marginTop: "10px",
-          marginBottom: "20px"
-        }}
+        className="file-input"
       />
-
-      <br />
 
       <label>Location</label>
 
       <input
         type="text"
         placeholder="Enter location"
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginTop: "5px",
-          marginBottom: "20px"
-        }}
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        className="form-control"
       />
 
       <button
-        style={{
-          background: "#2563eb",
-          color: "white",
-          padding: "12px 25px",
-          border: "none",
-          borderRadius: "8px",
-          cursor: "pointer"
-        }}
+        className="submit-btn"
+        onClick={handleSubmit}
       >
         Submit Issue
       </button>

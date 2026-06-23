@@ -1,28 +1,28 @@
 import { Link } from "react-router-dom";
+import "./Navbar.css";
 
 function Navbar() {
   return (
-    <nav
-      style={{
-        background:"#2563eb",
-        padding:"15px",
-        display:"flex",
-        gap:"20px"
-      }}
-    >
-      <Link style={{color:"white"}} to="/">Home</Link>
+    <nav className="navbar">
+      <div className="logo">
+        Community Hero AI
+      </div>
 
-      <Link style={{color:"white"}} to="/report">
-        Report Issue
-      </Link>
+      <div className="nav-links">
+        <Link to="/">Home</Link>
 
-      <Link style={{color:"white"}} to="/dashboard">
-        Dashboard
-      </Link>
+        <Link to="/report">
+          Report Issue
+        </Link>
 
-      <Link style={{color:"white"}} to="/leaderboard">
-        Leaderboard
-      </Link>
+        <Link to="/dashboard">
+          Dashboard
+        </Link>
+
+        <Link to="/leaderboard">
+          Leaderboard
+        </Link>
+      </div>
     </nav>
   );
 }
