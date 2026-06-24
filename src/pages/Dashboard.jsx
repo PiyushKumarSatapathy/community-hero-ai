@@ -1,6 +1,33 @@
 import "./Dashboard.css";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../services/firebase";
 
 function Dashboard() {
+  const [issues, setIssues] = useState([]);
+  useEffect(() => {
+  const fetchIssues = async () => {
+    try {
+      const querySnapshot = await getDocs(
+        collection(db, "issues")
+      );
+
+      const issuesData = querySnapshot.docs.map(
+        (doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })
+      );
+
+      setIssues(issuesData);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchIssues();
+}, []);
   return (
     <div className="dashboard-container">
 
@@ -11,17 +38,17 @@ function Dashboard() {
       <div className="dashboard-cards">
 
         <div className="dashboard-card">
-          <h2>15</h2>
+          <h2>{issues.length}</h2>
           <p>Total Reports</p>
         </div>
 
         <div className="dashboard-card">
-          <h2>8</h2>
+          <h2>0</h2>
           <p>Resolved</p>
         </div>
 
         <div className="dashboard-card">
-          <h2>7</h2>
+          <h2>{issues.length}</h2>
           <p>Pending</p>
         </div>
 
@@ -40,21 +67,24 @@ function Dashboard() {
   </thead>
 
   <tbody>
-    <tr>
-      <td>Road Damage</td>
-      <td>Pending</td>
+
+  {issues.map((issue) => (
+
+    <tr key={issue.id}>
+
+      <td>{issue.title}</td>
+
+      <td>
+        <span className="pending">
+          Pending
+        </span>
+      </td>
+
     </tr>
 
-    <tr>
-      <td>Water Leakage</td>
-      <td>Resolved</td>
-    </tr>
+  ))}
 
-    <tr>
-      <td>Street Light</td>
-      <td>Pending</td>
-    </tr>
-  </tbody>
+</tbody>
 
 </table>
 
