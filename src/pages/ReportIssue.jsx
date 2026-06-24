@@ -2,31 +2,58 @@ import { useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../services/firebase";
 import "./ReportIssue.css";
+import ai from "../services/gemini";
 
 function ReportIssue() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
-
+  const [aiSuggestion, setAiSuggestion] = useState("");
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async () => {
+    if (loading) return;
+
+      setLoading(true);
+  try {
+    await addDoc(collection(db, "issues"), {
+      title,
+      description,
+      location,
+      createdAt: new Date(),
+    });
+
     try {
-      await addDoc(collection(db, "issues"), {
-        title,
-        description,
-        location,
-        createdAt: new Date(),
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: `
+Issue Title: ${title}
+
+Description: ${description}
+
+Location: ${location}
+
+Give a short practical solution for this community issue.
+`,
       });
 
-      alert("Issue Submitted Successfully!");
-
-      setTitle("");
-      setDescription("");
-      setLocation("");
-    } catch (error) {
-      console.error(error);
-      alert("Error submitting issue");
+      setAiSuggestion(response.text.replace(/\*\*/g, ""));
+    } catch (aiError) {
+      console.error("Gemini Error:", aiError);
+      setAiSuggestion("AI suggestion unavailable right now.");
     }
-  };
+
+    setTitle("");
+    setDescription("");
+    setLocation("");
+    setLoading(false);
+    alert("Issue Submitted Successfully!");
+
+  } catch (error) {
+    console.error("Firestore Error:", error);
+    alert("Error saving issue");
+    setLoading(false);
+  }
+};
 
   return (
     <div className="report-container">
@@ -77,9 +104,16 @@ function ReportIssue() {
       <button
         className="submit-btn"
         onClick={handleSubmit}
+        disabled={loading}
       >
-        Submit Issue
+        {loading ? "Submitting..." : "Submit Issue"}
       </button>
+      {aiSuggestion && (
+  <div className="ai-box">
+    <h3>🤖 AI Suggestion</h3>
+    <p>{aiSuggestion}</p>
+  </div>
+)}
     </div>
   );
 }
