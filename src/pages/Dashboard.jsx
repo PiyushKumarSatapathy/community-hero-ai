@@ -2,6 +2,10 @@ import "./Dashboard.css";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../services/firebase";
+import {
+  updateDoc,
+  doc
+} from "firebase/firestore";
 
 function Dashboard() {
   const [issues, setIssues] = useState([]);
@@ -28,6 +32,24 @@ function Dashboard() {
 
   fetchIssues();
 }, []);
+const markResolved = async (id) => {
+  try {
+    await updateDoc(doc(db, "issues", id), {
+      status: "Resolved",
+    });
+
+    fetchIssues();
+  } catch (error) {
+    console.error(error);
+  }
+};
+const resolvedCount = issues.filter(
+  (issue) => issue.status === "Resolved"
+).length;
+
+const pendingCount = issues.filter(
+  (issue) => issue.status !== "Resolved"
+).length;
   return (
     <div className="dashboard-container">
 
@@ -43,14 +65,14 @@ function Dashboard() {
         </div>
 
         <div className="dashboard-card">
-          <h2>0</h2>
+          <h2>{resolvedCount}</h2>
           <p>Resolved</p>
         </div>
 
         <div className="dashboard-card">
-          <h2>{issues.length}</h2>
+          <h2>{pendingCount}</h2>
           <p>Pending</p>
-        </div>
+      </div>
 
       </div>
       <h2 style={{ marginBottom: "20px" }}>
@@ -63,6 +85,7 @@ function Dashboard() {
     <tr>
       <th>Issue</th>
       <th>Status</th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -75,10 +98,26 @@ function Dashboard() {
       <td>{issue.title}</td>
 
       <td>
-        <span className="pending">
-          Pending
-        </span>
-      </td>
+  <span
+    className={
+      issue.status === "Resolved"
+        ? "status-resolved"
+        : "status-pending"
+    }
+  >
+      {issue.status || "Pending"}
+  </span>
+</td>
+        <td>
+  {issue.status !== "Resolved" && (
+    <button
+      className="resolve-btn"
+      onClick={() => markResolved(issue.id)}
+    >
+      Resolve
+    </button>
+  )}
+</td>
 
     </tr>
 

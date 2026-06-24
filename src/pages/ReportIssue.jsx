@@ -19,6 +19,7 @@ function ReportIssue() {
       title,
       description,
       location,
+      status: "Pending",
       createdAt: new Date(),
     });
 
