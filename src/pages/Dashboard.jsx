@@ -7,8 +7,10 @@ import {
   doc
 } from "firebase/firestore";
 
+
 function Dashboard() {
   const [issues, setIssues] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
   const fetchIssues = async () => {
     try {
@@ -50,6 +52,9 @@ const resolvedCount = issues.filter(
 const pendingCount = issues.filter(
   (issue) => issue.status !== "Resolved"
 ).length;
+const filteredIssues = issues.filter((issue) =>
+  issue.title.toLowerCase().includes(searchTerm.toLowerCase())
+);
   return (
     <div className="dashboard-container">
 
@@ -75,6 +80,13 @@ const pendingCount = issues.filter(
       </div>
 
       </div>
+      <input
+  type="text"
+  placeholder="Search issues..."
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+  className="search-input"
+/>
       <h2 style={{ marginBottom: "20px" }}>
   Recent Issues
 </h2>
@@ -91,7 +103,7 @@ const pendingCount = issues.filter(
 
   <tbody>
 
-  {issues.map((issue) => (
+  {filteredIssues.map((issue) => (
 
     <tr key={issue.id}>
 
