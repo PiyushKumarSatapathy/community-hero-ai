@@ -37,3 +37,66 @@
   transform: translateY(-2px);
   opacity: 0.85;
 }
+
+.menu-btn{
+    display:none;
+    background:none;
+    border:none;
+    color:white;
+    font-size:24px;
+    cursor:pointer;
+}
+@media (max-width:768px){
+
+.navbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 20px;
+
+    position:relative;
+}
+
+.logo{
+    font-size:1.3rem;
+}
+
+.menu-btn{
+    display:block;
+    margin-left:auto;
+}
+
+.nav-links{
+
+    display:none;
+
+    position:absolute;
+
+    top:100%;
+
+    left:0;
+
+    width:100%;
+
+    background:linear-gradient(90deg,#2563eb,#06b6d4);
+
+    flex-direction:column;
+
+    text-align:center;
+
+    padding:20px 0;
+
+    gap:18px;
+
+    z-index:1000;
+}
+
+.nav-links.active{
+    display:flex;
+}
+
+}

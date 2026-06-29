@@ -1,28 +1,93 @@
 import "./Leaderboard.css";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../services/firebase";
 
 function Leaderboard() {
+  const [leaderboard, setLeaderboard] = useState([]);
+
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "issues"));
+
+        const departmentCount = {};
+
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+
+          if (!data.department) return;
+
+const dept = data.department;
+
+departmentCount[dept] = (departmentCount[dept] || 0) + 1;
+        });
+
+        const sortedDepartments = Object.entries(departmentCount)
+          .sort((a, b) => b[1] - a[1])
+          .map(([department, count]) => ({
+            department,
+            count,
+          }));
+
+        setLeaderboard(sortedDepartments);
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchLeaderboard();
+  }, []);
+
+  const getMedal = (index) => {
+    if (index === 0) return "🥇";
+    if (index === 1) return "🥈";
+    if (index === 2) return "🥉";
+    return `#${index + 1}`;
+  };
+
+  const getCardClass = (index) => {
+    if (index === 0) return "gold";
+    if (index === 1) return "silver";
+    if (index === 2) return "bronze";
+    return "";
+  };
+
   return (
     <div className="leaderboard-container">
 
-      <h1>Top Community Heroes</h1>
+      <h1>Department Leaderboard</h1>
 
-      <div className="leaderboard-card gold">
-        <span>🥇</span>
-        <h3>Rahul Sharma</h3>
-        <p>120 Issues Reported</p>
-      </div>
+      <p className="leaderboard-subtitle">
+        Departments ranked by the number of reported issues.
+      </p>
 
-      <div className="leaderboard-card silver">
-        <span>🥈</span>
-        <h3>Priya Das</h3>
-        <p>98 Issues Reported</p>
-      </div>
+      {leaderboard.map((item, index) => (
+        <div
+          key={item.department}
+          className={`leaderboard-card ${getCardClass(index)}`}
+        >
+          <span className="leaderboard-rank">
+            {getMedal(index)}
+          </span>
 
-      <div className="leaderboard-card bronze">
-        <span>🥉</span>
-        <h3>Amit Kumar</h3>
-        <p>85 Issues Reported</p>
-      </div>
+          <h3>{item.department}</h3>
+
+          <div className="leaderboard-info">
+  <p>{item.count} Issues</p>
+
+  <div className="progress-bar">
+    <div
+      className="progress-fill"
+      style={{
+        width: `${(item.count / leaderboard[0].count) * 100}%`,
+      }}
+    ></div>
+  </div>
+</div>
+        </div>
+      ))}
 
     </div>
   );
